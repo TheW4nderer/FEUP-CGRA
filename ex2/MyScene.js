@@ -25,6 +25,7 @@ class MyScene extends CGFscene {
         this.triangle = new MyTriangle(this);
         this.paralellogram = new MyParalellogram(this);
         this.tangram = new MyTangram(this);
+        this.cube = new MyUnitCube(this);
 
         //Objects connected to MyInterface
         this.displayTriangle = true;
@@ -71,55 +72,18 @@ class MyScene extends CGFscene {
                     0.0, this.scaleFactor, 0.0, 0.0,
                     0.0, 0.0, this.scaleFactor, 0.0,
                     0.0, 0.0, 0.0, 1.0];
-        
-                   
-        /*this.pushMatrix();
-        //this.translate(2,2,0);
-        this.multMatrix( [1.0, 0.0, 0.0, 0.0,
-                           0.0, 1.0, 0.0, 0.0,
-                           0.0, 0.0, 1.0, 0.0,
-                           -1.7, 2.5, 0.0, 1.0]);
-        this.scale(0.8,0.8,0);
-        this.diamond.display();
-        this.popMatrix();
+       
         this.pushMatrix();
-        this.translate(-1,1,0);
-        this.triangle.display();
-        this.popMatrix();
-        this.pushMatrix();
-        this.translate(-1.7,1.7,0);
-        this.scale(0.8,-0.8,0);
-        this.paralellogram.display();
-        this.popMatrix();
-        this.pushMatrix();
-        this.translate(0.5,1.1,0);
-        this.scale(-0.6,-0.6,0);
-        this.triangle.display();
-        this.popMatrix();
-        this.pushMatrix();
-        this.translate(-0.6,0,0);
-        this.rotate(Math.PI/4, 0,0,1);
-        this.triangle.display();
-        this.popMatrix();
-        this.pushMatrix();
-        this.scale(0.7,0.7,0);
-        this.translate(1.15,-1.4,0);
-        this.rotate(-3*Math.PI/4,0,0,1);
-        this.triangle.display();
-        this.popMatrix();
-        this.pushMatrix();
-        this.translate(2.1,-0.97,0);
-        this.scale(0.6,0.6,0);
-        this.rotate(Math.PI/4,0,0,1);
-        this.triangle.display();
-        this.popMatrix();
-        
-        //this.multMatrix(this.translation);
-        //this.triangle.display();
-        //this.popMatrix();*/
-
+        this.translate(2.8, 6, 3.7);
+        this.rotate(-Math.PI/2, 1.0, 0.0, 0.0);
         this.tangram.display();
-
+        this.pushMatrix();
+        this.translate(0.2, 0.7, -3.05);
+        this.scale(6,6,6);
+        this.cube.display();
+        this.popMatrix();
+        this.popMatrix();
+        
 
 
         // ---- BEGIN Primitive drawing section
