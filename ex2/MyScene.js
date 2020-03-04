@@ -25,7 +25,8 @@ class MyScene extends CGFscene {
         this.triangle = new MyTriangle(this);
         this.paralellogram = new MyParalellogram(this);
         this.tangram = new MyTangram(this);
-        this.cube = new MyUnitCube(this);
+        this.cube = new MyUnitCubeQuad(this);
+        //this.cubeQuad = new MyUnitCubeQuad(this);
 
         //Objects connected to MyInterface
         this.displayTriangle = true;
@@ -89,6 +90,10 @@ class MyScene extends CGFscene {
         this.popMatrix();
         this.popMatrix();
         
+        
+        //this.cubeQuad.display();
+
+
 
 
         // ---- BEGIN Primitive drawing section
