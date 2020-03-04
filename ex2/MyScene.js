@@ -72,12 +72,17 @@ class MyScene extends CGFscene {
                     0.0, this.scaleFactor, 0.0, 0.0,
                     0.0, 0.0, this.scaleFactor, 0.0,
                     0.0, 0.0, 0.0, 1.0];
-       
+
+        this.multMatrix(sca);
+        
         this.pushMatrix();
-        this.translate(2.8, 6, 3.7);
+        this.setDiffuse(1,0,0,0);
+        this.translate(2.8, 0, 3.7);
         this.rotate(-Math.PI/2, 1.0, 0.0, 0.0);
         this.tangram.display();
+        
         this.pushMatrix();
+        this.setDiffuse(0,0,1,0);
         this.translate(0.2, 0.7, -3.05);
         this.scale(6,6,6);
         this.cube.display();
