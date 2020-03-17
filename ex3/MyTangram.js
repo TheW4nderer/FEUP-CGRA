@@ -71,6 +71,8 @@ class MyTangram extends CGFobject {
         this.material11.setDiffuse(0.58*0.7,0,0.827*0.7,1.0);
         this.material11.setSpecular(0.58,0,0.827,1.0);
         this.material11.setShininess(10.0);
+
+
 	}
 
     display(){
@@ -82,7 +84,8 @@ class MyTangram extends CGFobject {
         
         this.scene.scale(0.8,0.8,1);
        // this.scene.materials[3].apply();
-        this.material5.apply(); 
+        this.scene.customMaterial.apply();
+        //this.material5.apply(); 
         this.diamond.display();
         this.scene.popMatrix();
         
