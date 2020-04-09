@@ -26,7 +26,6 @@ class ShaderScene extends CGFscene {
 		this.gl.enable(this.gl.DEPTH_TEST);
 		this.gl.enable(this.gl.CULL_FACE);
 		this.gl.depthFunc(this.gl.LEQUAL);
-
 		// objects initialization
 
 		this.axis = new CGFaxis(this);
@@ -51,11 +50,13 @@ class ShaderScene extends CGFscene {
 		this.appearance.setSpecular(0.0, 0.0, 0.0, 1);
 		this.appearance.setShininess(120);
 
-		this.texture = new CGFtexture(this, "textures/texture.jpg");
+		//this.texture = new CGFtexture(this, "textures/texture.jpg");
+		this.texture = new CGFtexture(this, "textures/waterTex.jpg");
 		this.appearance.setTexture(this.texture);
 		this.appearance.setTextureWrap('REPEAT', 'REPEAT');
 
-		this.texture2 = new CGFtexture(this, "textures/FEUP.jpg");
+		//this.texture2 = new CGFtexture(this, "textures/FEUP.jpg");
+		this.texture2 = new CGFtexture(this, "textures/waterMap.jpg");
 
 		// shaders initialization
 
@@ -71,7 +72,8 @@ class ShaderScene extends CGFscene {
 			new CGFshader(this.gl, "shaders/texture1.vert", "shaders/convolution.frag"),
 			new CGFshader(this.gl, "shaders/ex1.vert", "shaders/ex1.frag"),
 			new CGFshader(this.gl, "shaders/ex2.vert", "shaders/ex2.frag"),
-			new CGFshader(this.gl, "shaders/texture1.vert", "shaders/ex3.frag")
+			new CGFshader(this.gl, "shaders/texture1.vert", "shaders/ex3.frag"),
+			new CGFshader(this.gl, "shaders/water.vert", "shaders/water.frag")
 		];
 
 		// additional texture will have to be bound to texture unit 1 later, when using the shader, with "this.texture2.bind(1);"
@@ -81,6 +83,8 @@ class ShaderScene extends CGFscene {
 		this.testShaders[6].setUniformsValues({ timeFactor: 0 });
 		this.testShaders[10].setUniformsValues({ uSampler2: 1 });
 		this.testShaders[10].setUniformsValues({ timeFactor: 0 });
+		this.testShaders[12].setUniformsValues({ uSampler2: 1 });
+		this.testShaders[12].setUniformsValues({ timeFactor: 0 });
 
 
 		// Shaders interface variables
@@ -97,7 +101,8 @@ class ShaderScene extends CGFscene {
 			'Convolution': 8,
 			'Exercise 1': 9,
 			'Exercise 2':10,
-			'Exercise 3':11
+			'Exercise 3':11,
+			'Water':12
 		};
 
 		// shader code panels references
@@ -182,6 +187,8 @@ class ShaderScene extends CGFscene {
 			this.testShaders[6].setUniformsValues({ timeFactor: t / 100 % 1000 });
 		if (this.selectedExampleShader == 10)
 			this.testShaders[10].setUniformsValues({ timeFactor: t / 100 % 1000 });
+		if (this.selectedExampleShader == 12)
+			this.testShaders[12].setUniformsValues({ timeFactor: t / 100 % 1000 });
 	}
 
 	// main display function
