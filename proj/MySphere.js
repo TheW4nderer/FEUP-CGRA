@@ -76,8 +76,16 @@ class MySphere extends CGFobject {
       phi += phiInc;
     }
 
-
     this.primitiveType = this.scene.gl.TRIANGLES;
     this.initGLBuffers();
   }
+
+  display() {
+    this.scene.pushMatrix();
+    this.scene.defaultMaterial.apply();
+    if (this.scene.displayEarth == true)
+      this.scene.earthMaterial.apply();
+    this.scene.popMatrix();
+    super.display();
+   }
 }

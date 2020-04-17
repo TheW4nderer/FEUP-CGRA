@@ -30,10 +30,15 @@ class MyScene extends CGFscene {
         this.vehicle = new MyVehicle(this, 4, 16);
 
         this.cubeMap = new MyCubeMap(this);
+
         //Objects connected to MyInterface
         this.displayAxis = true;
+        this.displayEarth = false;
+        this.displayCubeMap = true;
         this.currentTexture = -1;
         this.currentObject = 0;
+        this.speedFactor = 1;
+        this.scaleFactor = 1;
         this.objects = [this.incompleteSphere, this.cylinder, this.vehicle];
         this.objectList = {
             'Sphere': 0,
@@ -48,21 +53,28 @@ class MyScene extends CGFscene {
         ];
 
         this.textureList = {
-            'Earth': 0, 
-            'Cubemap': 1,
-            'Forest': 2
+            'Cubemap': 0,
+            'Forest': 1
         };
         
 
+        this.earthMaterial = new CGFappearance(this);
+        this.earthMaterial.setAmbient(0.1, 0.1, 0.1, 1);
+        this.earthMaterial.setDiffuse(0.9, 0.9, 0.9, 1);
+        this.earthMaterial.setSpecular(0.1, 0.1, 0.1, 1);
+        this.earthMaterial.setShininess(10.0);
+        this.earthMaterial.loadTexture('images/earth.jpg');
+        this.earthMaterial.setTextureWrap('REPEAT', 'REPEAT');
+
         this.defaultMaterial = new CGFappearance(this);
-        this.defaultMaterial.setAmbient(0.1, 0.1, 0.1, 1);
-        this.defaultMaterial.setDiffuse(0.9, 0.9, 0.9, 1);
-        this.defaultMaterial.setSpecular(0.1, 0.1, 0.1, 1);
+        this.defaultMaterial.setAmbient(0.2, 0.4, 0.8, 1.0);
+        this.defaultMaterial.setDiffuse(0.2, 0.4, 0.8, 1.0);
+        this.defaultMaterial.setSpecular(0.2, 0.4, 0.8, 1.0);
         this.defaultMaterial.setShininess(10.0);
-        this.defaultMaterial.loadTexture('images/earth.jpg');
-        this.defaultMaterial.setTextureWrap('REPEAT', 'REPEAT');
     }
     initLights() {
+        this.setGlobalAmbientLight(0.5,0.5,0.5,1.0);
+        
         this.lights[0].setPosition(15, 2, 5, 1);
         this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
         this.lights[0].enable();
@@ -79,12 +91,11 @@ class MyScene extends CGFscene {
     }
     // called periodically (as per setUpdatePeriod() in init())
     update(t){
-        //To be done...
+        this.checkKeys();
     }
 
     updateAppliedTexture() {
-        if (this.currentObject != 2)
-            this.defaultMaterial.setTexture(this.textures[this.currentTexture]);
+        
     }
 
     updateObjectComplexity(){
@@ -98,12 +109,12 @@ class MyScene extends CGFscene {
 
         if(this.gui.isKeyPressed("KeyW")){
             text+=" W ";
-            this.vehicle.accelerate(0.3);
+            this.vehicle.accelerate(0.3*this.speedFactor);
             keysPressed=true;
         }
         if(this.gui.isKeyPressed("KeyS")){
             text+=" S ";
-            this.vehicle.accelerate(-0.3);
+            this.vehicle.accelerate(-0.3*this.speedFactor);
             keysPressed=true;
         }
         if(this.gui.isKeyPressed("KeyA")){
@@ -121,10 +132,11 @@ class MyScene extends CGFscene {
             this.vehicle.reset();
             keysPressed = true;
         }
-
+        
+        this.vehicle.update();
+        
         if(keysPressed){
             console.log(text);
-            this.vehicle.update();
         }
     }
     // called periodically (as per setUpdatePeriod() in init())
@@ -150,25 +162,15 @@ class MyScene extends CGFscene {
         if (this.displayAxis)
             this.axis.display();
 
-        this.setDefaultAppearance();
-
-
-
-        this.cubeMap.display();
-    
-
         this.pushMatrix();
-        if (this.currentTexture != -1){
-            this.defaultMaterial.apply();
-        }
-
-           
-        this.setDefaultAppearance();
         this.objects[this.currentObject].display();
-
+        this.popMatrix();
+        
+        if (this.displayCubeMap == true)
+            this.cubeMap.display();
         //this.vehicle.display();
         //this.cubeMap.display();
-        this.popMatrix();
+       
 
 
         // ---- BEGIN Primitive drawing section

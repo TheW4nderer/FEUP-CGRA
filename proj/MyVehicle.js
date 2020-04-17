@@ -74,11 +74,16 @@ class MyVehicle extends CGFobject {
     }
 
     turn(val){
-        this.orientation += val;
+         if(this.vel < 0){
+            this.orientation -= val;
+        }
+        else{
+            this.orientation += val;
+        }
     }
 
     accelerate(val){
-       this.vel = val;
+       this.vel += val;
     }
 
     reset(){
@@ -91,7 +96,8 @@ class MyVehicle extends CGFobject {
     
     display() {
         this.scene.pushMatrix();
-
+        this.scene.defaultMaterial.apply();
+        this.scene.scale(this.scene.scaleFactor,this.scene.scaleFactor,this.scene.scaleFactor);
         this.scene.translate(this.pos_x, 0, this.pos_z);
         this.scene.rotate(this.orientation*Math.PI/180, 0, 1, 0);
 

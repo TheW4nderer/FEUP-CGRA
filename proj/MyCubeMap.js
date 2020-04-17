@@ -135,7 +135,7 @@ class MyCubeMap extends CGFobject {
 		this.scene.pushMatrix();
 		this.scene.translate(0,0,-0.5);
 		this.scene.rotate(Math.PI, 0,1,0);
-		if (this.scene.currentTexture == 2) this.materialBack_forest.apply();
+		if (this.scene.currentTexture == 1) this.materialBack_forest.apply();
 		else this.materialBack.apply();
 
 	    this.quad.display();
@@ -144,7 +144,7 @@ class MyCubeMap extends CGFobject {
 	    //front
 	    this.scene.pushMatrix();
 		this.scene.translate(0,0,0.5);
-        if (this.scene.currentTexture == 2) this.materialFront_forest.apply();
+        if (this.scene.currentTexture == 1) this.materialFront_forest.apply();
 		else this.materialFront.apply();
 
 	    this.quad.display();
@@ -154,7 +154,7 @@ class MyCubeMap extends CGFobject {
 	    this.scene.pushMatrix();
 	    this.scene.translate(0,-0.5,0);
 	    this.scene.rotate(Math.PI/2, 1,0,0);
-	    if (this.scene.currentTexture == 2) this.materialBottom_forest.apply();
+	    if (this.scene.currentTexture == 1) this.materialBottom_forest.apply();
 	    else this.materialBottom.apply();
 
 	    this.quad.display();
@@ -164,7 +164,7 @@ class MyCubeMap extends CGFobject {
 	    this.scene.pushMatrix();
 	    this.scene.translate(0,0.5,0);
 	    this.scene.rotate(-Math.PI/2, 1,0,0);
-	    if (this.scene.currentTexture == 2) this.materialTop_forest.apply();
+	    if (this.scene.currentTexture == 1) this.materialTop_forest.apply();
 	    else this.materialTop.apply();
         
 	    this.quad.display();
@@ -175,7 +175,7 @@ class MyCubeMap extends CGFobject {
 	    this.scene.pushMatrix();
 	    this.scene.translate(0.5,0,0);
 	    this.scene.rotate(Math.PI/2, 0,1,0);
-	    if (this.scene.currentTexture == 2) this.materialRight_forest.apply();
+	    if (this.scene.currentTexture == 1) this.materialRight_forest.apply();
 	    else this.materialRight.apply();;
 
 	    this.quad.display();
@@ -185,7 +185,7 @@ class MyCubeMap extends CGFobject {
 	    this.scene.pushMatrix();
 	    this.scene.translate(-0.5,0,0);
 	    this.scene.rotate(-Math.PI/2, 0,1,0);
-	    if (this.scene.currentTexture == 2) this.materialLeft_forest.apply();
+	    if (this.scene.currentTexture == 1) this.materialLeft_forest.apply();
 	    else this.materialLeft.apply();
 
 	    this.quad.display();
