@@ -15,6 +15,7 @@ class MyVehicle extends CGFobject {
         this.rudder2 = new MyRudder(this.scene);
         this.rudder3 = new MyRudder(this.scene);
         this.rudder4 = new MyRudder(this.scene);
+        this.propeller = new MyPropeller(this.scene, this.slices, this.stacks);
         
         this.pos_x = 0;
         this.pos_z = 0;
@@ -23,6 +24,7 @@ class MyVehicle extends CGFobject {
 
         this.tRight = false; //checks if the vehicle is turning right
         this.tLeft = false; //checks if the vehicle is turning left
+        this.automatic = false;
         
     }
     initBuffers() {
@@ -78,9 +80,11 @@ class MyVehicle extends CGFobject {
         this.initGLBuffers();
     }
 
+
     update(){
         this.pos_x += this.vel * Math.sin(this.orientation*Math.PI/180);
         this.pos_z += this.vel * Math.cos(this.orientation*Math.PI/180);
+        this.propeller.setAngle(this.vel);
     }
 
     turn(val){
@@ -193,20 +197,24 @@ class MyVehicle extends CGFobject {
         this.rudder4.display();
         this.scene.popMatrix();
 
-        //helices
-        /*this.scene.pushMatrix();
-        this.scene.translate(0,0,1);
-        this.scene.rotate(Math.PI/4, 0,0,1);
-        this.scene.scale(0.07,0.35,0.07);
+        //Engines
+        this.scene.pushMatrix();
+        this.scene.translate(0.1,-0.5,-0.25);
+        this.scene.scale(0.08, 0.08, 0.2);
         this.sphere.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(0,0,1);
-        this.scene.rotate(-Math.PI/4, 0,0,1);
-        this.scene.scale(0.07,0.35,0.07);
+        this.scene.translate(-0.1,-0.5,-0.25);
+        this.scene.scale(0.08, 0.08, 0.2);
         this.sphere.display();
-        this.scene.popMatrix();*/
+        this.scene.popMatrix();
+
+        //helices
+        
+        this.propeller.display();
+
+
        
         this.scene.popMatrix();
     }
