@@ -27,7 +27,8 @@ class MyScene extends CGFscene {
         this.axis = new CGFaxis(this);
         this.incompleteSphere = new MySphere(this, 16, 8);
         this.cylinder = new MyCylinder(this,16);
-        this.vehicle = new MyVehicle(this, 4, 16);
+        this.vehicle = new MyVehicle(this, 18, 16);
+        this.rudder = new MyRudder(this);
 
         this.cubeMap = new MyCubeMap(this);
 
@@ -36,7 +37,7 @@ class MyScene extends CGFscene {
         this.displayEarth = false;
         this.displayCubeMap = true;
         this.currentTexture = -1;
-        this.currentObject = 0;
+        this.currentObject = 2;
         this.speedFactor = 1;
         this.scaleFactor = 1;
         this.objects = [this.incompleteSphere, this.cylinder, this.vehicle];
@@ -81,7 +82,7 @@ class MyScene extends CGFscene {
         this.lights[0].update();
     }
     initCameras() {
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(5, 5, 5), vec3.fromValues(0, 0, 0));
+        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
     }
     setDefaultAppearance() {
         this.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -121,16 +122,25 @@ class MyScene extends CGFscene {
             text+=" A ";
             this.vehicle.turn(-5);
             keysPressed=true;
+            this.vehicle.tRight = false;
+            this.vehicle.tLeft = true;
         }
         if(this.gui.isKeyPressed("KeyD")){
             text+=" D ";
             this.vehicle.turn(5);
             keysPressed=true;
+            this.vehicle.tRight = true;
+            this.vehicle.tLeft = false;
         }
         if (this.gui.isKeyPressed("KeyR")) {
             text+=" R "
             this.vehicle.reset();
             keysPressed = true;
+        }
+
+        if (!keysPressed){
+            this.vehicle.tRight = false;
+            this.vehicle.tLeft = false;
         }
         
         this.vehicle.update();
@@ -138,6 +148,8 @@ class MyScene extends CGFscene {
         if(keysPressed){
             console.log(text);
         }
+
+
     }
     // called periodically (as per setUpdatePeriod() in init())
     update(t){
@@ -164,6 +176,7 @@ class MyScene extends CGFscene {
 
         this.pushMatrix();
         this.objects[this.currentObject].display();
+        //this.rudder.display();
         this.popMatrix();
         
         if (this.displayCubeMap == true)
