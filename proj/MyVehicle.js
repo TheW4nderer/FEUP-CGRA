@@ -26,6 +26,7 @@ class MyVehicle extends CGFobject {
         this.tLeft = false; //checks if the vehicle is turning left
         this.autoPilot = false;
         this.time = 0;
+        this.elapsed_time = 0;
         this.angle_x = 0;
         this.radius = 5;
         this.center_x = 0;
@@ -88,23 +89,29 @@ class MyVehicle extends CGFobject {
 
     update(t){
         if (this.autoPilot){
-            this.angle_x += 2*Math.PI/50;
-            this.pos_x = this.pos_x - this.radius*Math.cos(this.angle_x - Math.PI/2);
-            this.pos_z = this.pos_z - this.radius*Math.sin(this.angle_x - Math.PI/2);
+            if (this.time == 0){
+                this.time = t;
+            }
+            this.elapsed_time = t-this.time; 
+            this.angle_x -= 2*Math.PI*this.elapsed_time/5000;
+            this.time = t;
         }
-
-        this.pos_x += this.vel * Math.sin(this.orientation*Math.PI/180);
-        this.pos_z += this.vel * Math.cos(this.orientation*Math.PI/180);
-        //this.orientation = Math.asin(this.pos_z, this.pos_x);
+        else{
+            this.pos_x += this.vel * Math.sin(this.orientation*Math.PI/180);
+            this.pos_z += this.vel * Math.cos(this.orientation*Math.PI/180);  
+        }
         this.propeller.setAngle(this.vel);
+
+        if (Math.round(this.angle_x*10)/10 == -Math.round(2*Math.PI*10)/10){
+            this.autoPilot = false;
+        }
     }
 
     setAutopilot(){
         this.autoPilot = true;
-        this.angle_x = Math.atan(this.pos_z/this.pos_x);
-        this.center_x = this.pos_x - this.radius*Math.cos(this.angle_x - Math.PI/2);
-        this.center_z = this.pos_z - this.radius*Math.sin(this.angle_x - Math.PI/2);
-
+        this.angle_x = 0;
+        this.center_x = this.pos_x - this.radius*Math.cos(-this.orientation*Math.PI/180);
+        this.center_z = this.pos_z - this.radius*Math.sin(-this.orientation*Math.PI/180);
     }
 
     turn(val){
@@ -127,25 +134,23 @@ class MyVehicle extends CGFobject {
         this.pos_z = 0;
         this.orientation = 0;
         this.autoPilot = false;
+        this.time = 0;
+        this.elapsed_time = 0;
 
     }
     
     display() {
         this.scene.pushMatrix();
-        this.scene.defaultMaterial.apply();
-        this.scene.scale(this.scene.scaleFactor,this.scene.scaleFactor,this.scene.scaleFactor);
-        this.scene.translate(this.pos_x, 0, this.pos_z);
-        this.scene.rotate(this.orientation*Math.PI/180, 0, 1, 0);
-
-        /*this.scene.rotate(Math.PI/2, 1, 0, 0);  //Putting the pyramid in its original position
-        this.scene.translate(0,-1,0);
-        super.display();*/
-
         if (this.autoPilot){
             this.scene.translate(this.center_x, 0,this.center_z);
             this.scene.rotate(this.angle_x, 0, 1, 0);
             this.scene.translate(-this.center_x, 0, -this.center_z);
         }
+        
+        this.scene.defaultMaterial.apply();
+        this.scene.scale(this.scene.scaleFactor,this.scene.scaleFactor,this.scene.scaleFactor);
+        this.scene.translate(this.pos_x, 0, this.pos_z);
+        this.scene.rotate(this.orientation*Math.PI/180, 0, 1, 0);
 
         //Blimp balloon
         this.scene.pushMatrix();
@@ -166,7 +171,7 @@ class MyVehicle extends CGFobject {
         this.scene.translate(0,0.35,-1);
         this.scene.rotate(Math.PI/2, 0,1,0);
         this.scene.scale(0.3, 0.3, 0.3);
-        if (this.tRight){
+        if (this.tRight || this.autoPilot){
             //this.scene.translate(-0.4, 0,0);
             this.scene.rotate(Math.PI/6, 0,1,0);
         }
@@ -194,7 +199,7 @@ class MyVehicle extends CGFobject {
         this.scene.translate(0,-0.35,-1);
         this.scene.rotate(Math.PI/2, 0,1,0);
         this.scene.scale(0.3, -0.3, 0.3);
-        if (this.tRight){
+        if (this.tRight || this.autoPilot){
             //this.scene.translate(-0.4, 0,0);
             this.scene.rotate(Math.PI/6, 0,1,0);
         }
