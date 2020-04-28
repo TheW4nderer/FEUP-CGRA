@@ -24,7 +24,12 @@ class MyVehicle extends CGFobject {
 
         this.tRight = false; //checks if the vehicle is turning right
         this.tLeft = false; //checks if the vehicle is turning left
-        this.automatic = false;
+        this.autoPilot = false;
+        this.time = 0;
+        this.angle_x = 0;
+        this.radius = 5;
+        this.center_x = 0;
+        this.center_z = 0;
         
     }
     initBuffers() {
@@ -81,10 +86,25 @@ class MyVehicle extends CGFobject {
     }
 
 
-    update(){
+    update(t){
+        if (this.autoPilot){
+            this.angle_x += 2*Math.PI/50;
+            this.pos_x = this.pos_x - this.radius*Math.cos(this.angle_x - Math.PI/2);
+            this.pos_z = this.pos_z - this.radius*Math.sin(this.angle_x - Math.PI/2);
+        }
+
         this.pos_x += this.vel * Math.sin(this.orientation*Math.PI/180);
         this.pos_z += this.vel * Math.cos(this.orientation*Math.PI/180);
+        //this.orientation = Math.asin(this.pos_z, this.pos_x);
         this.propeller.setAngle(this.vel);
+    }
+
+    setAutopilot(){
+        this.autoPilot = true;
+        this.angle_x = Math.atan(this.pos_z/this.pos_x);
+        this.center_x = this.pos_x - this.radius*Math.cos(this.angle_x - Math.PI/2);
+        this.center_z = this.pos_z - this.radius*Math.sin(this.angle_x - Math.PI/2);
+
     }
 
     turn(val){
@@ -106,6 +126,7 @@ class MyVehicle extends CGFobject {
         this.pos_x = 0;
         this.pos_z = 0;
         this.orientation = 0;
+        this.autoPilot = false;
 
     }
     
@@ -119,6 +140,12 @@ class MyVehicle extends CGFobject {
         /*this.scene.rotate(Math.PI/2, 1, 0, 0);  //Putting the pyramid in its original position
         this.scene.translate(0,-1,0);
         super.display();*/
+
+        if (this.autoPilot){
+            this.scene.translate(this.center_x, 0,this.center_z);
+            this.scene.rotate(this.angle_x, 0, 1, 0);
+            this.scene.translate(-this.center_x, 0, -this.center_z);
+        }
 
         //Blimp balloon
         this.scene.pushMatrix();
@@ -141,11 +168,11 @@ class MyVehicle extends CGFobject {
         this.scene.scale(0.3, 0.3, 0.3);
         if (this.tRight){
             //this.scene.translate(-0.4, 0,0);
-            this.scene.rotate(Math.PI/6, 1,1,0);
+            this.scene.rotate(Math.PI/6, 0,1,0);
         }
         else if (this.tLeft){
             this.scene.translate(0,0,0.2);
-            this.scene.rotate(-Math.PI/6, 1,1,0);
+            this.scene.rotate(-Math.PI/6, 0,1,0);
         }
         this.rudder1.display();
         this.scene.popMatrix();
@@ -169,11 +196,11 @@ class MyVehicle extends CGFobject {
         this.scene.scale(0.3, -0.3, 0.3);
         if (this.tRight){
             //this.scene.translate(-0.4, 0,0);
-            this.scene.rotate(Math.PI/6, 1,1,0);
+            this.scene.rotate(Math.PI/6, 0,1,0);
         }
         else if (this.tLeft){
             this.scene.translate(0,0,0.2);
-            this.scene.rotate(-Math.PI/6, 1,1,0);
+            this.scene.rotate(-Math.PI/6, 0,1,0);
         }
         this.rudder2.display();
         this.scene.popMatrix();
