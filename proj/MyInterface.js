@@ -20,6 +20,7 @@ class MyInterface extends CGFinterface {
         this.gui.add(this.scene, 'displayAxis').name('Display Axis');
         this.gui.add(this.scene, 'displayEarth').name('Display Earth');
         this.gui.add(this.scene, 'displayCubeMap').name('Display Cube Map');
+        this.gui.add(this.scene, 'displayTerrain').name('Display Terrain');
         this.gui.add(this.scene, 'currentTexture', this.scene.textureList).name('Selected Texture').onChange(this.scene.updateAppliedTexture.bind(this.scene));
         this.gui.add(this.scene, 'currentObject', this.scene.objectList).name('Selected Object').onChange(this.scene.updateObjectComplexity.bind(this.scene));
 

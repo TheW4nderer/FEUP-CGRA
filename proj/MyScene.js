@@ -31,11 +31,13 @@ class MyScene extends CGFscene {
         this.rudder = new MyRudder(this);
 
         this.cubeMap = new MyCubeMap(this);
+        this.terrain = new MyTerrain(this);
 
         //Objects connected to MyInterface
         this.displayAxis = true;
         this.displayEarth = false;
         this.displayCubeMap = true;
+        this.displayTerrain = true;
         this.currentTexture = -1;
         this.currentObject = 2;
         this.speedFactor = 1;
@@ -82,7 +84,7 @@ class MyScene extends CGFscene {
         this.lights[0].update();
     }
     initCameras() {
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(40, 40, 40), vec3.fromValues(0, 0, 0));
     }
     setDefaultAppearance() {
         this.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -166,8 +168,6 @@ class MyScene extends CGFscene {
     display() {
         // ---- BEGIN Background, camera and axis setup
         // Clear image and depth buffer everytime we update the scene
-    
-
         this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
         this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
         // Initialize Model-View matrix as identity (no transformation
@@ -180,17 +180,23 @@ class MyScene extends CGFscene {
         if (this.displayAxis)
             this.axis.display();
 
-        this.pushMatrix();
-        this.objects[this.currentObject].display();
-        //this.rudder.display();
-        this.popMatrix();
+        this.setDefaultAppearance();
         
-        if (this.displayCubeMap == true)
-            this.cubeMap.display();
-        //this.vehicle.display();
-        //this.cubeMap.display();
-       
+        this.pushMatrix();
 
+        if (this.displayEarth == true && this.currentObject == 0){
+            this.earthMaterial.apply();
+        }
+        
+        this.objects[this.currentObject].display();
+        
+        if (this.displayCubeMap)
+            this.cubeMap.display();
+
+        if (this.displayTerrain)
+            this.terrain.display();
+        
+        this.popMatrix();
 
         // ---- BEGIN Primitive drawing section
 

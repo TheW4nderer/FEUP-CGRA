@@ -146,10 +146,9 @@ class MyVehicle extends CGFobject {
             this.scene.rotate(this.angle_x, 0, 1, 0);
             this.scene.translate(-this.center_x, 0, -this.center_z);
         }
-        
-        this.scene.defaultMaterial.apply();
+ 
         this.scene.scale(this.scene.scaleFactor,this.scene.scaleFactor,this.scene.scaleFactor);
-        this.scene.translate(this.pos_x, 0, this.pos_z);
+        this.scene.translate(this.pos_x, 10, this.pos_z);
         this.scene.rotate(this.orientation*Math.PI/180, 0, 1, 0);
 
         //Blimp balloon
@@ -245,10 +244,9 @@ class MyVehicle extends CGFobject {
         //helices
         
         this.propeller.display();
-
-
-       
+        
         this.scene.popMatrix();
+
     }
     
     updateBuffers(complexity){
