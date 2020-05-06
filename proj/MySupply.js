@@ -14,14 +14,17 @@ class MySupply extends CGFobject {
     this.quad.initBuffers(scene);
     this.initMaterials(scene);
     this.state = SupplyStates.INACTIVE;
+    this.dropTime = 0;
+    this.time = 0;
+    this.elapsedTime = 0;
 	};
     
 
     initMaterials(scene){
     	//side
     	this.material_side = new CGFappearance(this.scene);
-        this.material_side.setAmbient(0.1, 0.1, 0.1, 1);
-        this.material_side.setDiffuse(0.9, 0.9, 0.9, 1);
+        this.material_side.setAmbient(0.9, 0.9, 0.9, 1);
+        this.material_side.setDiffuse(0.1, 0.1, 0.1, 1);
         this.material_side.setSpecular(0.1, 0.1, 0.1, 1);
         this.material_side.setShininess(10.0);
         this.material_side.loadTexture('images/box.png');
@@ -33,9 +36,19 @@ class MySupply extends CGFobject {
 
     }
 
-    update(){
-        if (this.state == SupplyStates.FALLING) this.pos_y -= 0.1;
-        if (this.pos_y == 0) this.land();
+    update(t){
+        if (this.time == 0){
+            this.time = t;
+        }
+        this.elapsedTime = t-this.time;
+        this.time = t;
+
+
+        if (this.state == SupplyStates.FALLING){
+            this.dropTime += this.elapsedTime;
+            this.pos_y -= 9*this.elapsedTime/3000;
+            if (this.pos_y <= 0.2) this.land();
+        }
     }
 
     drop(drop_x, drop_z){
@@ -43,13 +56,26 @@ class MySupply extends CGFobject {
         this.pos_y = 9;
         this.pos_x = drop_x;
         this.pos_z = drop_z;
+        this.dropTime = 0;
+        this.time = 0;
+        this.elapsedTime = 0;
     }
 
     land(){
         if (this.state == SupplyStates.FALLING){ 
             this.state = SupplyStates.LANDED;
-            this.pos_y = 0;
+            this.pos_y = 0.2;
+            this.time = 0;
+            this.dropTime = 0;
+            this.elapsedTime = 0;
         }
+    }
+
+    reset(){
+    	this.state = SupplyStates.INACTIVE;
+    	this.pos_y = 9;
+        this.pos_x = 0;
+        this.pos_z = 0;
     }
 
     displayFalling(){
@@ -98,11 +124,37 @@ class MySupply extends CGFobject {
     }
 
     displayLanded(){
-        this.material_side.apply(); 
+       this.material_side.apply(); 
 
-        this.scene.pushMatrix();
-        this.quad.display();
-        this.scene.popMatrix();
+       this.scene.pushMatrix();
+       this.scene.translate(this.pos_x, 0.2, this.pos_z);
+       this.scene.rotate(Math.PI/2, 1, 0, 0);
+       this.quad.display();
+       this.scene.popMatrix();
+
+       this.scene.pushMatrix();
+       this.scene.translate(this.pos_x-1, 0.2, this.pos_z);
+       this.scene.rotate(Math.PI/2, 1, 0, 0);
+       this.quad.display();
+       this.scene.popMatrix();
+
+       this.scene.pushMatrix();
+       this.scene.translate(this.pos_x+1, 0.2, this.pos_z);
+       this.scene.rotate(Math.PI/2, 1, 0, 0);
+       this.quad.display();
+       this.scene.popMatrix();
+
+       this.scene.pushMatrix();
+       this.scene.translate(this.pos_x, 0.2, this.pos_z-1);
+       this.scene.rotate(Math.PI/2, 1, 0, 0);
+       this.quad.display();
+       this.scene.popMatrix();
+
+       this.scene.pushMatrix();
+       this.scene.translate(this.pos_x, 0.2, this.pos_z+1);
+       this.scene.rotate(Math.PI/2, 1, 0, 0);
+       this.quad.display();
+       this.scene.popMatrix();
     }
 
     
@@ -115,13 +167,11 @@ class MySupply extends CGFobject {
 	    }
 	    else if (this.state == SupplyStates.LANDED){
 	       this.scene.pushMatrix();
-	       this.scene.translate(0,0.5,0);
 	       this.displayLanded();
 	       this.scene.popMatrix();
-	    }
+	    }   
+
 	};
 
     
-
-
 }

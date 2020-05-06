@@ -95,10 +95,7 @@ class MyScene extends CGFscene {
         this.setSpecular(0.2, 0.4, 0.8, 1.0);
         this.setShininess(10.0);
     }
-    // called periodically (as per setUpdatePeriod() in init())
-    update(t){
-        this.checkKeys();
-    }
+
 
     updateAppliedTexture() {
         
@@ -141,22 +138,22 @@ class MyScene extends CGFscene {
             text+=" R ";
             this.vehicle.reset();
             this.currentSupply = 0;
-            this.supplyList[this.currentSupply].state = 0;
+            for (var i = 0; i < 5; i++) this.supplyList[i].reset();
             keysPressed = true;
         }
 
         if (this.gui.isKeyPressed("KeyP")){
             text += " P ";
             this.vehicle.setAutopilot();
-            keysPressed = trllue;
+            keysPressed = true;
         }
 
         if (this.gui.isKeyPressed("KeyL")){
             text += " L ";
-            this.currentSupply++;
-            this.currentSupply %= 5;
             this.supplyList[this.currentSupply].drop(this.vehicle.pos_x, this.vehicle.pos_z);
             console.log(this.currentSupply);
+            this.currentSupply++;
+            this.currentSupply %= 5;
             keysPressed = true;
         }
 
@@ -177,7 +174,7 @@ class MyScene extends CGFscene {
         this.checkKeys();
         this.vehicle.update(t);
         
-        this.supplyList[this.currentSupply].update();
+        for (var i = 0; i < 5; i++) this.supplyList[i].update(t);
     }
 
 
@@ -211,9 +208,11 @@ class MyScene extends CGFscene {
 
         if (this.displayTerrain)
             this.terrain.display();
-               
+
+        for (var i = 0; i < 5; i++){
+            this.supplyList[i].display();
+        }     
         this.supplyList[this.currentSupply].display();
-        
         this.popMatrix();
 
         // ---- BEGIN Primitive drawing section
