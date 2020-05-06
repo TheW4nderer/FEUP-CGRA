@@ -29,6 +29,9 @@ class MyScene extends CGFscene {
         this.cylinder = new MyCylinder(this,16);
         this.vehicle = new MyVehicle(this, 18, 16);
         this.rudder = new MyRudder(this);
+        this.supplyList = [];
+        for (var i = 0; i < 5; i++) this.supplyList[i] = new MySupply(this);
+        this.currentSupply = 0;
 
         this.cubeMap = new MyCubeMap(this);
         this.terrain = new MyTerrain(this);
@@ -135,14 +138,25 @@ class MyScene extends CGFscene {
             this.vehicle.tLeft = true;
         }
         if (this.gui.isKeyPressed("KeyR")) {
-            text+=" R "
+            text+=" R ";
             this.vehicle.reset();
+            this.currentSupply = 0;
+            this.supplyList[this.currentSupply].state = 0;
             keysPressed = true;
         }
 
         if (this.gui.isKeyPressed("KeyP")){
             text += " P ";
             this.vehicle.setAutopilot();
+            keysPressed = trllue;
+        }
+
+        if (this.gui.isKeyPressed("KeyL")){
+            text += " L ";
+            this.currentSupply++;
+            this.currentSupply %= 5;
+            this.supplyList[this.currentSupply].drop(this.vehicle.pos_x, this.vehicle.pos_z);
+            console.log(this.currentSupply);
             keysPressed = true;
         }
 
@@ -162,6 +176,8 @@ class MyScene extends CGFscene {
     update(t){
         this.checkKeys();
         this.vehicle.update(t);
+        
+        this.supplyList[this.currentSupply].update();
     }
 
 
@@ -195,6 +211,8 @@ class MyScene extends CGFscene {
 
         if (this.displayTerrain)
             this.terrain.display();
+               
+        this.supplyList[this.currentSupply].display();
         
         this.popMatrix();
 

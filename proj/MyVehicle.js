@@ -104,6 +104,9 @@ class MyVehicle extends CGFobject {
 
         if (Math.round(this.angle_x*10)/10 == -Math.round(2*Math.PI*10)/10){
             this.autoPilot = false;
+            this.elapsed_time = 0;
+            this.time = 0;
+            this.angle_x = 0;
         }
     }
 
@@ -171,7 +174,6 @@ class MyVehicle extends CGFobject {
         this.scene.rotate(Math.PI/2, 0,1,0);
         this.scene.scale(0.3, 0.3, 0.3);
         if (this.tRight || this.autoPilot){
-            //this.scene.translate(-0.4, 0,0);
             this.scene.rotate(Math.PI/6, 0,1,0);
         }
         else if (this.tLeft){
