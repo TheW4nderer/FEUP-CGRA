@@ -16,6 +16,7 @@ class MyVehicle extends CGFobject {
         this.rudder3 = new MyRudder(this.scene);
         this.rudder4 = new MyRudder(this.scene);
         this.propeller = new MyPropeller(this.scene, this.slices, this.stacks);
+        this.rope = new MyCylinder(this.scene,this.slices);
         
         this.pos_x = 0;
         this.pos_z = 0;
@@ -31,7 +32,14 @@ class MyVehicle extends CGFobject {
         this.radius = 5;
         this.center_x = 0;
         this.center_z = 0;
-        
+
+        this.flag = new MyPlane(this.scene,40);
+        this.flag_shader = new CGFshader(this.scene.gl, "shaders/flag.vert", "shaders/flag.frag");
+        this.flag_texture = new CGFtexture(this.scene, "images/flag.jpg");
+
+        this.flag_shader.setUniformsValues({uSampler: 0});
+        this.flag_shader.setUniformsValues({speed: 0});
+        this.flag_shader.setUniformsValues({timeFactor: 0});
     }
     initBuffers() {
         this.vertices = [];
@@ -108,6 +116,9 @@ class MyVehicle extends CGFobject {
             this.time = 0;
             this.angle_x = 0;
         }
+
+        this.flag_shader.setUniformsValues({speed: this.speed});
+        this.flag_shader.setUniformsValues({timeFactor: t / 100 % 1000 });
     }
 
     setAutopilot(){
@@ -143,6 +154,7 @@ class MyVehicle extends CGFobject {
     }
     
     display() {
+        this.scene.defaultMaterial.apply();
         this.scene.pushMatrix();
         if (this.autoPilot){
             this.scene.translate(this.center_x, 0,this.center_z);
@@ -243,12 +255,37 @@ class MyVehicle extends CGFobject {
         this.sphere.display();
         this.scene.popMatrix();
 
-        //helices
+        //Propeller
         
         this.propeller.display();
-        
+
+        //Rope
+        this.scene.pushMatrix();
+        this.scene.scale(0.005,0.005,0.75);
+        this.scene.translate(0,0,-2);
+        this.scene.rotate(Math.PI/2,1,0,0);
+        this.rope.display();
+
         this.scene.popMatrix();
 
+
+        //Flag
+        this.scene.pushMatrix();
+        this.scene.scale(1.4,0.7,1);
+        this.scene.translate(0,0,-2);
+        this.scene.rotate(Math.PI/2,0,1,0);
+
+        this.scene.setActiveShader(this.flag_shader);
+
+        this.flag_texture.bind(0);
+        
+        this.flag.display();
+
+        this.scene.popMatrix();
+        
+        this.scene.setActiveShader(this.scene.defaultShader);
+
+        this.scene.popMatrix();
     }
     
     updateBuffers(complexity){

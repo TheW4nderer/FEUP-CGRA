@@ -41,7 +41,7 @@ class MyScene extends CGFscene {
         this.displayEarth = false;
         this.displayCubeMap = true;
         this.displayTerrain = true;
-        this.currentTexture = -1;
+        this.currentTexture = 0;
         this.currentObject = 2;
         this.speedFactor = 1;
         this.scaleFactor = 1;
@@ -87,7 +87,7 @@ class MyScene extends CGFscene {
         this.lights[0].update();
     }
     initCameras() {
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(40, 40, 40), vec3.fromValues(0, 0, 0));
+        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(35, 35, 35), vec3.fromValues(0, 0, 0));
     }
     setDefaultAppearance() {
         this.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -106,67 +106,68 @@ class MyScene extends CGFscene {
     }    
 
 
-     checkKeys(){
+    checkKeys(){
         var text="Keys pressed: ";
         var keysPressed=false;
+        
+        if (!this.vehicle.autoPilot){
+            
+            if(this.gui.isKeyPressed("KeyW")){
+                text+=" W ";
+                this.vehicle.accelerate(0.3*this.speedFactor);
+                keysPressed=true;
+            }
+            if(this.gui.isKeyPressed("KeyS")){
+                text+=" S ";
+                this.vehicle.accelerate(-0.3*this.speedFactor);
+                keysPressed=true;
+            }
+            if(this.gui.isKeyPressed("KeyA")){
+                text+=" A ";
+                this.vehicle.turn(-5);
+                keysPressed=true;
+                this.vehicle.tRight = true;
+                this.vehicle.tLeft = false;
+            }
+            if(this.gui.isKeyPressed("KeyD")){
+                text+=" D ";
+                this.vehicle.turn(5);
+                keysPressed=true;
+                this.vehicle.tRight = false;
+                this.vehicle.tLeft = true;
+            }
+            if (this.gui.isKeyPressed("KeyP")){
+                text += " P ";
+                this.vehicle.setAutopilot();
+                keysPressed = true;
+            }
 
-        if(this.gui.isKeyPressed("KeyW")){
-            text+=" W ";
-            this.vehicle.accelerate(0.3*this.speedFactor);
-            keysPressed=true;
+            if (this.gui.isKeyPressed("KeyL")){
+                text += " L ";
+                this.supplyList[this.currentSupply].drop(this.vehicle.pos_x, this.vehicle.pos_z);
+                console.log(this.currentSupply);
+                this.currentSupply++;
+                this.currentSupply %= 5;
+                keysPressed = true;
+            }
+
+            if (!keysPressed){
+                this.vehicle.tRight = false;
+                this.vehicle.tLeft = false;
+            }
         }
-        if(this.gui.isKeyPressed("KeyS")){
-            text+=" S ";
-            this.vehicle.accelerate(-0.3*this.speedFactor);
-            keysPressed=true;
-        }
-        if(this.gui.isKeyPressed("KeyA")){
-            text+=" A ";
-            this.vehicle.turn(-5);
-            keysPressed=true;
-            this.vehicle.tRight = true;
-            this.vehicle.tLeft = false;
-        }
-        if(this.gui.isKeyPressed("KeyD")){
-            text+=" D ";
-            this.vehicle.turn(5);
-            keysPressed=true;
-            this.vehicle.tRight = false;
-            this.vehicle.tLeft = true;
-        }
+
         if (this.gui.isKeyPressed("KeyR")) {
-            text+=" R ";
-            this.vehicle.reset();
-            this.currentSupply = 0;
-            for (var i = 0; i < 5; i++) this.supplyList[i].reset();
-            keysPressed = true;
-        }
+                text+=" R ";
+                this.vehicle.reset();
+                this.currentSupply = 0;
+                for (var i = 0; i < 5; i++) this.supplyList[i].reset();
+                keysPressed = true;
+         }
 
-        if (this.gui.isKeyPressed("KeyP")){
-            text += " P ";
-            this.vehicle.setAutopilot();
-            keysPressed = true;
-        }
-
-        if (this.gui.isKeyPressed("KeyL")){
-            text += " L ";
-            this.supplyList[this.currentSupply].drop(this.vehicle.pos_x, this.vehicle.pos_z);
-            console.log(this.currentSupply);
-            this.currentSupply++;
-            this.currentSupply %= 5;
-            keysPressed = true;
-        }
-
-        if (!keysPressed){
-            this.vehicle.tRight = false;
-            this.vehicle.tLeft = false;
-        }
-        
-        
-        if(keysPressed){
-            console.log(text);
-        }
-
+         if(keysPressed){
+                console.log(text);
+         }
 
     }
     // called periodically (as per setUpdatePeriod() in init())
@@ -180,12 +181,15 @@ class MyScene extends CGFscene {
 
     display() {
         // ---- BEGIN Background, camera and axis setup
+        
         // Clear image and depth buffer everytime we update the scene
         this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
         this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
+        
         // Initialize Model-View matrix as identity (no transformation
         this.updateProjectionMatrix();
         this.loadIdentity();
+        
         // Apply transformations corresponding to the camera position relative to the origin
         this.applyViewMatrix();
         
@@ -196,10 +200,6 @@ class MyScene extends CGFscene {
         this.setDefaultAppearance();
         
         this.pushMatrix();
-
-        if (this.displayEarth == true && this.currentObject == 0){
-            this.earthMaterial.apply();
-        }
         
         this.objects[this.currentObject].display();
         

@@ -17,7 +17,7 @@ class MyCubeMap extends CGFobject {
 		this.materialBack.setSpecular(0.0, 0.0, 0.0, 1);
 		this.materialBack.setShininess(10.0);
 		this.materialBack.loadTexture('images/split_cubemap/back.png');
-		this.materialBack.setTextureWrap('REPEAT', 'REPEAT');
+		this.materialBack.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
 
 		//front
 		this.materialFront = new CGFappearance(scene);
@@ -26,7 +26,7 @@ class MyCubeMap extends CGFobject {
 		this.materialFront.setSpecular(0.0, 0.0, 0.0, 1);
 		this.materialFront.setShininess(10.0);
 		this.materialFront.loadTexture('images/split_cubemap/front.png');
-		this.materialFront.setTextureWrap('REPEAT', 'REPEAT');
+		this.materialFront.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
 
 		//left
 		this.materialLeft = new CGFappearance(scene);
@@ -35,7 +35,7 @@ class MyCubeMap extends CGFobject {
 		this.materialLeft.setSpecular(0.0, 0.0, 0.0, 1);
 		this.materialLeft.setShininess(10.0);
 		this.materialLeft.loadTexture('images/split_cubemap/left.png');
-		this.materialLeft.setTextureWrap('REPEAT', 'REPEAT');
+		this.materialLeft.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
 
 		//right
 		this.materialRight = new CGFappearance(scene);
@@ -44,7 +44,7 @@ class MyCubeMap extends CGFobject {
 		this.materialRight.setSpecular(0.0, 0.0, 0.0, 1);
 		this.materialRight.setShininess(10.0);
 		this.materialRight.loadTexture('images/split_cubemap/right.png');
-		this.materialRight.setTextureWrap('REPEAT', 'REPEAT');
+		this.materialRight.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
 
 		//bottom
 		this.materialBottom = new CGFappearance(scene);
@@ -53,7 +53,7 @@ class MyCubeMap extends CGFobject {
 		this.materialBottom.setSpecular(0.0, 0.0, 0.0, 1);
 		this.materialBottom.setShininess(10.0);
 		this.materialBottom.loadTexture('images/split_cubemap/bottom.png');
-		this.materialBottom.setTextureWrap('REPEAT', 'REPEAT');
+		this.materialBottom.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
 
 		//top
 		this.materialTop = new CGFappearance(scene);
@@ -62,7 +62,7 @@ class MyCubeMap extends CGFobject {
 		this.materialTop.setSpecular(0.0, 0.0, 0.0, 1);
 		this.materialTop.setShininess(10.0);
 		this.materialTop.loadTexture('images/split_cubemap/top.png');
-		this.materialTop.setTextureWrap('REPEAT', 'REPEAT');
+		this.materialTop.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
 
 
         
@@ -73,7 +73,7 @@ class MyCubeMap extends CGFobject {
 		this.materialBack_forest.setSpecular(0.0, 0.0, 0.0, 1);
 		this.materialBack_forest.setShininess(10.0);
 		this.materialBack_forest.loadTexture('images/split_forest/back.png');
-		this.materialBack_forest.setTextureWrap('REPEAT', 'REPEAT');
+		this.materialBack_forest.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
 
 		//front
 		this.materialFront_forest = new CGFappearance(scene);
@@ -82,7 +82,7 @@ class MyCubeMap extends CGFobject {
 		this.materialFront_forest.setSpecular(0.0, 0.0, 0.0, 1);
 		this.materialFront_forest.setShininess(10.0);
 		this.materialFront_forest.loadTexture('images/split_forest/front.png');
-		this.materialFront_forest.setTextureWrap('REPEAT', 'REPEAT');
+		this.materialFront_forest.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
 
 		//left
 		this.materialLeft_forest = new CGFappearance(scene);
@@ -91,7 +91,7 @@ class MyCubeMap extends CGFobject {
 		this.materialLeft_forest.setSpecular(0.0, 0.0, 0.0, 1);
 		this.materialLeft_forest.setShininess(10.0);
 		this.materialLeft_forest.loadTexture('images/split_forest/left.png');
-		this.materialLeft_forest.setTextureWrap('REPEAT', 'REPEAT');
+		this.materialLeft_forest.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
 
 		//right
 		this.materialRight_forest = new CGFappearance(scene);
@@ -100,7 +100,7 @@ class MyCubeMap extends CGFobject {
 		this.materialRight_forest.setSpecular(0.0, 0.0, 0.0, 1);
 		this.materialRight_forest.setShininess(10.0);
 		this.materialRight_forest.loadTexture('images/split_forest/right.png');
-		this.materialRight_forest.setTextureWrap('REPEAT', 'REPEAT');
+		this.materialRight_forest.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
 
 		//bottom
 		this.materialBottom_forest = new CGFappearance(scene);
@@ -109,7 +109,7 @@ class MyCubeMap extends CGFobject {
 		this.materialBottom_forest.setSpecular(0.0, 0.0, 0.0, 1);
 		this.materialBottom_forest.setShininess(10.0);
 		this.materialBottom_forest.loadTexture('images/split_forest/bottom.png');
-		this.materialBottom_forest.setTextureWrap('REPEAT', 'REPEAT');
+		this.materialBottom_forest.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
 
 		//top
 		this.materialTop_forest = new CGFappearance(scene);
@@ -118,7 +118,7 @@ class MyCubeMap extends CGFobject {
 		this.materialTop_forest.setSpecular(0.0, 0.0, 0.0, 1);
 		this.materialTop_forest.setShininess(10.0);
 		this.materialTop_forest.loadTexture('images/split_forest/top.png');
-		this.materialTop_forest.setTextureWrap('REPEAT', 'REPEAT');
+		this.materialTop_forest.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
 
 
 	}	
@@ -128,6 +128,7 @@ class MyCubeMap extends CGFobject {
 
 
         this.scene.pushMatrix();
+        this.scene.translate(0,24.9,0);
         this.scene.scale(50,50,50);
 
 

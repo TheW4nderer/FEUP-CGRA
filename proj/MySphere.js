@@ -79,4 +79,14 @@ class MySphere extends CGFobject {
     this.primitiveType = this.scene.gl.TRIANGLES;
     this.initGLBuffers();
   }
+
+  display(){
+    if (this.scene.displayEarth && this.scene.currentObject == 0){
+      this.scene.earthMaterial.apply();
+    }
+    else{
+      this.scene.defaultMaterial.apply();
+    }
+    super.display();
+  }
 }
