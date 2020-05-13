@@ -1,7 +1,7 @@
 
 /** Represents a plane with nrDivs divisions along both axis, with center at (0,0) */
 class MyPlane extends CGFobject{
-	constructor(scene, nrDivs, minS, maxS, minT, maxT) {
+	constructor(scene, nrDivs, twinSides, minS, maxS, minT, maxT) {
 		super(scene);
 		// nrDivs = 1 if not provided
 		nrDivs = typeof nrDivs !== 'undefined' ? nrDivs : 1;
@@ -13,6 +13,7 @@ class MyPlane extends CGFobject{
 		this.maxT = maxT || 1;
 		this.q = (this.maxS - this.minS) / this.nrDivs;
 		this.w = (this.maxT - this.minT) / this.nrDivs;
+		this.twinSides = twinSides;
 		this.initBuffers();
 	}
 	initBuffers() {
@@ -44,6 +45,12 @@ class MyPlane extends CGFobject{
 			if (j + 1 < this.nrDivs) {
 				this.indices.push(ind + this.nrDivs);
 				this.indices.push(ind);
+			}
+		}
+
+		if (this.twinSides){
+			for (var i = this.indices.length; i >= 0; i--){
+				this.indices.push(this.indices[i]);
 			}
 		}
 	

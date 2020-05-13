@@ -33,7 +33,7 @@ class MyVehicle extends CGFobject {
         this.center_x = 0;
         this.center_z = 0;
 
-        this.flag = new MyPlane(this.scene,40);
+        this.flag = new MyPlane(this.scene,40, true);
         this.flag_shader = new CGFshader(this.scene.gl, "shaders/flag.vert", "shaders/flag.frag");
         this.flag_texture = new CGFtexture(this.scene, "images/flag.jpg");
 
