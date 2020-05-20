@@ -92,10 +92,10 @@ class MyScene extends CGFscene {
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(35, 35, 35), vec3.fromValues(0, 0, 0));
     }
     setDefaultAppearance() {
-        this.setAmbient(0.2, 0.9, 0.2, 1.0);
-        this.setDiffuse(0.2, 0.4, 0.8, 1.0);
-        this.setSpecular(0.2, 0.4, 0.8, 1.0);
-        this.setShininess(10.0);
+        this.defaultMaterial.setAmbient(0.8, 1, 0, 1);
+        this.defaultMaterial.setDiffuse(0.2, 0.5, 0.5, 1.0);
+        this.defaultMaterial.setSpecular(0.2, 0.4, 0.8, 1.0);
+        this.defaultMaterial.setShininess(10.0);
     }
 
 
@@ -104,7 +104,7 @@ class MyScene extends CGFscene {
     }
 
     updateObjectComplexity(){
-        //this.objects[this.currentObject];
+      
     }    
 
 
@@ -178,6 +178,7 @@ class MyScene extends CGFscene {
          }
 
     }
+    
     // called periodically (as per setUpdatePeriod() in init())
     update(t){
         this.checkKeys();

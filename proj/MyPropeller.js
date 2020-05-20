@@ -20,10 +20,7 @@ class MyPropeller extends CGFobject {
     display(){
         this.material.apply();
 
-        //Centrak Sphere
-        // TODO
-
-        //this.scene.pushMatrix();
+        //Central Sphere
 
         this.scene.pushMatrix();
         this.scene.translate(0.1,-0.5,-0.45);

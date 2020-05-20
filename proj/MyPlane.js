@@ -48,7 +48,7 @@ class MyPlane extends CGFobject{
 			}
 		}
 
-		if (this.twinSides){
+		if (this.twinSides){    //Show both sides of the plane by inverting the vertexes's indexes (for the flag)
 			for (var i = this.indices.length; i >= 0; i--){
 				this.indices.push(this.indices[i]);
 			}

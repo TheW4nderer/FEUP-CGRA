@@ -38,14 +38,14 @@ class MyBillboard extends CGFobject{
 
         this.scene.pushMatrix();
         this.defaultMaterial.apply();
-        this.scene.translate(-0.5, 0.5, 0, 1);
+        this.scene.translate(-0.95, 0.5, 0, 1);
         this.scene.scale(0.1, 1.5, 1);
         this.support.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
         this.defaultMaterial.apply();
-        this.scene.translate(0.5, 0.5, 0, 1);
+        this.scene.translate(0.95, 0.5, 0, 1);
         this.scene.scale(0.1, 1, 1);
         this.support.display();
         this.scene.popMatrix();

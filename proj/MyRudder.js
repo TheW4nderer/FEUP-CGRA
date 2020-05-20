@@ -8,7 +8,6 @@ class MyRudder extends CGFobject {
 	    this.triangle = new MyTriangle(this.scene);
 	}
 	display(){
-	    this.scene.setDefaultAppearance();
 	    this.scene.pushMatrix();
 	    this.quad.display();
 	    this.scene.popMatrix();

@@ -49,6 +49,12 @@ class MyVehicle extends CGFobject {
         this.ben10.loadTexture('images/verde.png');
         this.ben10.setTextureWrap('REPEAT', 'REPEAT');
 
+        this.green = new CGFappearance(this);
+        this.green.setAmbient(0, 1, 0, 1);
+        this.green.setDiffuse(0.9, 0.9, 0.9, 1);
+        this.green.setSpecular(0.1, 0.1, 0.1, 1);
+        this.green.setShininess(10.0);
+
        
 
     }
@@ -184,7 +190,8 @@ class MyVehicle extends CGFobject {
         this.sphere.display();
         this.scene.popMatrix();
     
-        this.scene.setDefaultAppearance();
+       
+        
         //Gondola
         this.scene.pushMatrix();
         this.scene.translate(0,-0.5,-0.3);
@@ -193,6 +200,9 @@ class MyVehicle extends CGFobject {
         this.cylinder.display();
         this.scene.popMatrix();
 
+        this.scene.defaultMaterial.apply();
+        this.scene.setDefaultAppearance();
+        
         //rudder1
         this.scene.pushMatrix();
         this.scene.translate(0,0.35,-1);
@@ -226,7 +236,6 @@ class MyVehicle extends CGFobject {
         this.scene.rotate(Math.PI/2, 0,1,0);
         this.scene.scale(0.3, -0.3, 0.3);
         if (this.tRight || this.autoPilot){
-            //this.scene.translate(-0.4, 0,0);
             this.scene.rotate(Math.PI/6, 0,1,0);
         }
         else if (this.tLeft){
