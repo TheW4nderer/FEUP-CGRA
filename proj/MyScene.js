@@ -29,6 +29,7 @@ class MyScene extends CGFscene {
         this.cylinder = new MyCylinder(this,16);
         this.vehicle = new MyVehicle(this, 18, 16);
         this.rudder = new MyRudder(this);
+        this.billboard = new MyBillboard(this);
         this.supplyList = [];
         for (var i = 0; i < 5; i++) this.supplyList[i] = new MySupply(this);
         this.currentSupply = 0;
@@ -45,6 +46,7 @@ class MyScene extends CGFscene {
         this.currentObject = 2;
         this.speedFactor = 1;
         this.scaleFactor = 1;
+        this.LkeyUp = true;
         this.objects = [this.incompleteSphere, this.cylinder, this.vehicle];
         this.objectList = {
             'Sphere': 0,
@@ -90,7 +92,7 @@ class MyScene extends CGFscene {
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(35, 35, 35), vec3.fromValues(0, 0, 0));
     }
     setDefaultAppearance() {
-        this.setAmbient(0.2, 0.4, 0.8, 1.0);
+        this.setAmbient(0.2, 0.9, 0.2, 1.0);
         this.setDiffuse(0.2, 0.4, 0.8, 1.0);
         this.setSpecular(0.2, 0.4, 0.8, 1.0);
         this.setShininess(10.0);
@@ -142,14 +144,20 @@ class MyScene extends CGFscene {
                 keysPressed = true;
             }
 
-            if (this.gui.isKeyPressed("KeyL")){
+            if (this.gui.isKeyPressed("KeyL") && this.LkeyUp){
                 text += " L ";
-                this.supplyList[this.currentSupply].drop(this.vehicle.pos_x, this.vehicle.pos_z);
-                console.log(this.currentSupply);
-                this.currentSupply++;
-                this.currentSupply %= 5;
-                keysPressed = true;
+                if (this.currentSupply < 5) {
+                    this.supplyList[this.currentSupply].drop(this.vehicle.pos_x, this.vehicle.pos_z);
+                    console.log(this.currentSupply);
+                    this.currentSupply++;
+                    //this.currentSupply %= 5;
+                    keysPressed = true;
+                    this.LkeyUp = false;
+                }
+                
             }
+
+            if (!this.gui.isKeyPressed("KeyL")) this.LkeyUp = true;
 
             if (!keysPressed){
                 this.vehicle.tRight = false;
@@ -174,7 +182,7 @@ class MyScene extends CGFscene {
     update(t){
         this.checkKeys();
         this.vehicle.update(t);
-        
+        this.billboard.update();
         for (var i = 0; i < 5; i++) this.supplyList[i].update(t);
     }
 
@@ -202,7 +210,13 @@ class MyScene extends CGFscene {
         this.pushMatrix();
         
         this.objects[this.currentObject].display();
-        
+
+        this.pushMatrix();
+        this.translate(-8,3,0);
+        this.rotate(Math.PI/2, 0,1,0);
+        this.billboard.display();
+        this.popMatrix();
+
         if (this.displayCubeMap)
             this.cubeMap.display();
 
@@ -212,7 +226,7 @@ class MyScene extends CGFscene {
         for (var i = 0; i < 5; i++){
             this.supplyList[i].display();
         }     
-        this.supplyList[this.currentSupply].display();
+        if (this.currentSupply < 5) this.supplyList[this.currentSupply].display();
         this.popMatrix();
 
         // ---- BEGIN Primitive drawing section

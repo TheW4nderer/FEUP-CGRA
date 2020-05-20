@@ -5,6 +5,12 @@ class MyPropeller extends CGFobject {
 		this.sphere = new MySphere(scene, slices, stacks);
 		this.sphere.initBuffers();
 		this.angle = 0;
+
+		this.material = new CGFappearance(this.scene);
+        this.material.setAmbient(0, 0, 0, 1);
+        this.material.setDiffuse(0.1, 0.1, 0.1, 1);
+        this.material.setSpecular(0.1, 0.1, 0.1, 1);
+        this.material.setShininess(10.0);
 	}
 
 	setAngle(angle){
@@ -12,7 +18,7 @@ class MyPropeller extends CGFobject {
 	}
     
     display(){
-        this.scene.defaultMaterial.apply();
+        this.material.apply();
 
         //Centrak Sphere
         // TODO

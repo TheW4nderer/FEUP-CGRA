@@ -12,12 +12,13 @@ varying vec2 vTextureCoord;
 
 
 void main() {
-	vec3 offset=vec3(0.0,0.0,0.0);
-	
-	vTextureCoord = aTextureCoord;
-
-	offset.z += sin(0.5*timeFactor+aVertexPosition.x+abs(speed*3.0)) * 0.5 * (aVertexPosition.x + 0.5);
-
-	gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition+offset, 1.0);
+vec3 offset=vec3(0.0,0.0,0.0);
+    
+    vTextureCoord = aTextureCoord;
+    
+    offset.z += sin(timeFactor*(speed*5.0+0.1) + 15.0*(aVertexPosition.x+0.5))*0.04*(aVertexPosition.x+0.5);
+    
+    gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition+offset, 1.0);
+    
 }
 

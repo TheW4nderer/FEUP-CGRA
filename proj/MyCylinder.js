@@ -43,7 +43,7 @@ class MyCylinder extends CGFobject {
   }
 
   display(){
-    this.scene.defaultMaterial.apply();
+    this.scene.setDefaultAppearance();
     super.display();
   }
 }

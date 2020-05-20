@@ -40,6 +40,17 @@ class MyVehicle extends CGFobject {
         this.flag_shader.setUniformsValues({uSampler: 0});
         this.flag_shader.setUniformsValues({speed: 0});
         this.flag_shader.setUniformsValues({timeFactor: 0});
+
+        this.ben10 = new CGFappearance(this.scene);
+        this.ben10.setAmbient(0.1, 0.1, 0.1, 1);
+        this.ben10.setDiffuse(0.9, 0.9, 0.9, 1);
+        this.ben10.setSpecular(0.1, 0.1, 0.1, 1);
+        this.ben10.setShininess(10.0);
+        this.ben10.loadTexture('images/verde.png');
+        this.ben10.setTextureWrap('REPEAT', 'REPEAT');
+
+       
+
     }
     initBuffers() {
         this.vertices = [];
@@ -169,9 +180,11 @@ class MyVehicle extends CGFobject {
         //Blimp balloon
         this.scene.pushMatrix();
         this.scene.scale(0.5,0.5,1);
+        this.ben10.apply();
         this.sphere.display();
         this.scene.popMatrix();
-
+    
+        this.scene.setDefaultAppearance();
         //Gondola
         this.scene.pushMatrix();
         this.scene.translate(0,-0.5,-0.3);
