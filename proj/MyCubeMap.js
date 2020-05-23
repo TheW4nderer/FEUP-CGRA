@@ -128,7 +128,7 @@ class MyCubeMap extends CGFobject {
 
 
         this.scene.pushMatrix();
-        this.scene.translate(0,24.9,0);
+        this.scene.translate(0,1,0);
         this.scene.scale(50,50,50);
 
 

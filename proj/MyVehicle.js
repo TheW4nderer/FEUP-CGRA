@@ -185,11 +185,11 @@ class MyVehicle extends CGFobject {
     display() {
         this.scene.defaultMaterial.apply();
         this.scene.pushMatrix();
-        //if (this.autoPilot){
-        //}
+   
  
-        this.scene.scale(this.scene.scaleFactor,this.scene.scaleFactor,this.scene.scaleFactor);
+
         this.scene.translate(this.pos_x, 10, this.pos_z);
+        this.scene.scale(this.scene.scaleFactor,this.scene.scaleFactor,this.scene.scaleFactor);
         this.scene.rotate(this.orientation*Math.PI/180, 0, 1, 0);
 
         //Blimp balloon
