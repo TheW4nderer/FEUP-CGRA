@@ -118,8 +118,11 @@ class MyVehicle extends CGFobject {
                 this.time = t;
             }
             this.elapsed_time = t-this.time; 
-            this.angle_x -= 2*Math.PI*this.elapsed_time/5000;
+            this.orientation += 360*this.elapsed_time/5000;
             this.time = t;
+            this.pos_x = -this.radius * Math.cos(this.orientation * Math.PI/180) + this.center_x ;
+            this.pos_z = this.radius * Math.sin(this.orientation * Math.PI/180) + this.center_z ;
+
         }
         else{
             this.pos_x += this.vel * Math.sin(this.orientation*Math.PI/180);
@@ -136,14 +139,23 @@ class MyVehicle extends CGFobject {
 
         this.flag_shader.setUniformsValues({speed: this.speed});
         this.flag_shader.setUniformsValues({timeFactor: t / 100 % 1000 });
+
     }
 
     setAutopilot(){
-        this.autoPilot = true;
-        this.angle_x = 0;
-        this.center_x = this.pos_x - this.radius*Math.cos(-this.orientation*Math.PI/180);
-        this.center_z = this.pos_z - this.radius*Math.sin(-this.orientation*Math.PI/180);
+        if (this.autoPilot){ 
+            this.autoPilot = false;
+        }
+        else {
+            this.autoPilot = true;
+            this.elapsed_time = 0;
+            this.time = 0;
+            this.angle_x = 0;
+            this.center_x = this.pos_x + this.radius*Math.sin((this.orientation+90)*Math.PI/180);
+            this.center_z = this.pos_z + this.radius*Math.cos((this.orientation+90)*Math.PI/180);
+        }    
     }
+
 
     turn(val){
          if(this.vel < 0){
@@ -173,11 +185,8 @@ class MyVehicle extends CGFobject {
     display() {
         this.scene.defaultMaterial.apply();
         this.scene.pushMatrix();
-        if (this.autoPilot){
-            this.scene.translate(this.center_x, 0,this.center_z);
-            this.scene.rotate(this.angle_x, 0, 1, 0);
-            this.scene.translate(-this.center_x, 0, -this.center_z);
-        }
+        //if (this.autoPilot){
+        //}
  
         this.scene.scale(this.scene.scaleFactor,this.scene.scaleFactor,this.scene.scaleFactor);
         this.scene.translate(this.pos_x, 10, this.pos_z);

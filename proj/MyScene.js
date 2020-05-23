@@ -138,11 +138,7 @@ class MyScene extends CGFscene {
                 this.vehicle.tRight = false;
                 this.vehicle.tLeft = true;
             }
-            if (this.gui.isKeyPressed("KeyP")){
-                text += " P ";
-                this.vehicle.setAutopilot();
-                keysPressed = true;
-            }
+          
 
             if (this.gui.isKeyPressed("KeyL") && this.LkeyUp){
                 text += " L ";
@@ -164,6 +160,15 @@ class MyScene extends CGFscene {
                 this.vehicle.tLeft = false;
             }
         }
+
+        if (this.gui.isKeyPressed("KeyP")){
+                text += " P ";
+                if (!this.vehicle.autoPilot) this.vehicle.setAutopilot();
+                else this.vehicle.autoPilot = false;
+                keysPressed = true;
+                //console.log(this.vehicle.autoPilot);
+            }
+
 
         if (this.gui.isKeyPressed("KeyR")) {
                 text+=" R ";
