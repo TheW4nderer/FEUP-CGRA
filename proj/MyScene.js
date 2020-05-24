@@ -144,9 +144,7 @@ class MyScene extends CGFscene {
                 text += " L ";
                 if (this.currentSupply < 5) {
                     this.supplyList[this.currentSupply].drop(this.vehicle.pos_x, this.vehicle.pos_z);
-                    console.log(this.currentSupply);
                     this.currentSupply++;
-                    //this.currentSupply %= 5;
                     keysPressed = true;
                     this.LkeyUp = false;
                 }
@@ -166,7 +164,6 @@ class MyScene extends CGFscene {
                 if (!this.vehicle.autoPilot) this.vehicle.setAutopilot();
                 else this.vehicle.autoPilot = false;
                 keysPressed = true;
-                //console.log(this.vehicle.autoPilot);
             }
 
 

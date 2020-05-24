@@ -66,7 +66,6 @@ class MyBillboard extends CGFobject{
         this.progress_bar.display();
         this.scene.popMatrix();
         
-        //this.progress_bar.display();
 
         this.scene.setActiveShader(this.scene.defaultShader);
         this.scene.setDefaultAppearance();

@@ -17,7 +17,7 @@ class MyCubeMap extends CGFobject {
 		this.materialBack.setSpecular(0.0, 0.0, 0.0, 1);
 		this.materialBack.setShininess(10.0);
 		this.materialBack.loadTexture('images/split_cubemap/back.png');
-		this.materialBack.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
+		this.materialBack.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');       //Clamp to Edge to clear white lines on the corners of the cubemap
 
 		//front
 		this.materialFront = new CGFappearance(scene);
