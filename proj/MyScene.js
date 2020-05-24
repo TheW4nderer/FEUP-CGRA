@@ -128,15 +128,15 @@ class MyScene extends CGFscene {
                 text+=" A ";
                 this.vehicle.turn(5);
                 keysPressed=true;
-                this.vehicle.tRight = true;
-                this.vehicle.tLeft = false;
+                this.vehicle.tRight = false;
+                this.vehicle.tLeft = true;
             }
             if(this.gui.isKeyPressed("KeyD")){
                 text+=" D ";
                 this.vehicle.turn(-5);
                 keysPressed=true;
-                this.vehicle.tRight = false;
-                this.vehicle.tLeft = true;
+                this.vehicle.tRight = true;
+                this.vehicle.tLeft = false;
             }
           
 
