@@ -217,10 +217,10 @@ class MyVehicle extends CGFobject {
         this.scene.translate(0,0.35,-1);
         this.scene.rotate(Math.PI/2, 0,1,0);
         this.scene.scale(0.3, 0.3, 0.3);
-        if (this.tRight || this.autoPilot){
+        if (this.tRight){
             this.scene.rotate(Math.PI/6, 0,1,0);
         }
-        else if (this.tLeft){
+        else if (this.tLeft || this.autoPilot){
             this.scene.translate(0,0,0.2);
             this.scene.rotate(-Math.PI/6, 0,1,0);
         }
@@ -244,10 +244,10 @@ class MyVehicle extends CGFobject {
         this.scene.translate(0,-0.35,-1);
         this.scene.rotate(Math.PI/2, 0,1,0);
         this.scene.scale(0.3, -0.3, 0.3);
-        if (this.tRight || this.autoPilot){
+        if (this.tRight){
             this.scene.rotate(Math.PI/6, 0,1,0);
         }
-        else if (this.tLeft){
+        else if (this.tLeft || this.autoPilot){
             this.scene.translate(0,0,0.2);
             this.scene.rotate(-Math.PI/6, 0,1,0);
         }
